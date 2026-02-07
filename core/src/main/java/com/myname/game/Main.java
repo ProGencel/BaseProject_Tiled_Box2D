@@ -5,6 +5,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.myname.game.screens.gamescreen.GameScreen;
 
@@ -12,9 +14,22 @@ import com.myname.game.screens.gamescreen.GameScreen;
 public class Main extends Game {
 
     private AssetManager manager;
+    private TmxMapLoader mapLoader;
 
     @Override
     public void create() {
+        manager = new AssetManager();
+        mapLoader = new TmxMapLoader();
+
+        loadAssets();
+
         setScreen(new GameScreen(manager));
+    }
+
+    private void loadAssets()
+    {
+        manager.setLoader(TiledMap.class,mapLoader);
+        manager.load("World/world.tmx", TiledMap.class);
+        manager.finishLoading();
     }
 }
