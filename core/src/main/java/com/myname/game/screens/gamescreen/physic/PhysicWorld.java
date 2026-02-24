@@ -21,7 +21,6 @@ public class PhysicWorld {
 
         world = new World(new Vector2(0,0),true);
         debugRenderer = new Box2DDebugRenderer();
-        ObjectCreator.createBody(BodyDef.BodyType.DynamicBody,world,new Vector2(3,3),new Vector2(2,2), ObjectCreator.ShapeType.Rectangle);
     }
 
     public void render(float dt)

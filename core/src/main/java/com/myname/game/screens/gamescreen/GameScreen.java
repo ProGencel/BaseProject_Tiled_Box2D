@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.myname.game.entities.HolderStatics;
 import com.myname.game.screens.gamescreen.physic.PhysicWorld;
 import com.myname.game.screens.gamescreen.tools.MapCamManager;
 
@@ -18,6 +19,8 @@ public class GameScreen implements Screen {
 
     private SpriteBatch batch;
 
+    private HolderStatics holderStatics;
+
     public GameScreen(AssetManager assetManager)
     {
         this.assetManager = assetManager;
@@ -25,6 +28,8 @@ public class GameScreen implements Screen {
 
         manager = new MapCamManager(assetManager,batch);
         physicWorld = new PhysicWorld(manager);
+
+        holderStatics = new HolderStatics(manager.getTiledMap());
     }
 
     @Override
@@ -42,6 +47,8 @@ public class GameScreen implements Screen {
 
         batch.setProjectionMatrix(manager.getCamera().combined);
         batch.begin();
+
+        holderStatics.draw(batch);
 
         batch.end();
     }
