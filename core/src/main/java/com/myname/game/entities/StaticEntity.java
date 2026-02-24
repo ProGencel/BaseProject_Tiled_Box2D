@@ -41,7 +41,7 @@ public class StaticEntity extends GameEntity{
     {
         for(RectangleMapObject rectangleMapObject : mapObject.getTile().getObjects().getByType(RectangleMapObject.class))
         {
-            Rectangle rec = rectangleMapObject.getRectangle();
+            Rectangle rec = new Rectangle(rectangleMapObject.getRectangle());
             rec.x *= PPM;
             rec.x += rectangle.x;
 
