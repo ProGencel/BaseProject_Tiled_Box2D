@@ -27,7 +27,6 @@ public class PhysicWorld {
     {
         doPhysicsStep(dt);
         debugRenderer.render(world,manager.getCamera().combined);
-
     }
 
 
@@ -41,6 +40,11 @@ public class PhysicWorld {
             world.step(1/60f,6,2);
             accumulator -= 1/60f;
         }
+    }
+
+    public World getWorld()
+    {
+        return world;
     }
 
 }

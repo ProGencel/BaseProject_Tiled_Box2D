@@ -18,7 +18,7 @@ public class ObjectCreator {
     {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
-        bodyDef.position.set(pos.x,pos.y);
+        bodyDef.position.set(pos.x + mes.x/2,pos.y + mes.y/2);
 
         Body body = world.createBody(bodyDef);
 

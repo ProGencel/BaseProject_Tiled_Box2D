@@ -4,15 +4,24 @@ import static com.myname.game.screens.gamescreen.utils.Constants.*;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.myname.game.screens.gamescreen.physic.ObjectCreator;
 
 public class StaticEntity extends GameEntity{
 
     private TextureRegion texture;
     private Rectangle rectangle;
 
-    public StaticEntity(TiledMapTileMapObject mapObject)
+    private Array<Rectangle> hitboxRecs;
+
+    public StaticEntity(TiledMapTileMapObject mapObject, World world, TiledMap map)
     {
         rectangle = new Rectangle();
 
@@ -22,6 +31,34 @@ public class StaticEntity extends GameEntity{
         rectangle.height = mapObject.getTextureRegion().getRegionHeight() * PPM;
 
         texture = mapObject.getTextureRegion();
+
+
+        hitboxRecs = new Array<>();
+        setHitboxRecs(mapObject,world,map);
+    }
+
+    private void setHitboxRecs(TiledMapTileMapObject mapObject, World world, TiledMap map)
+    {
+        for(RectangleMapObject rectangleMapObject : mapObject.getTile().getObjects().getByType(RectangleMapObject.class))
+        {
+            Rectangle rec = rectangleMapObject.getRectangle();
+            rec.x *= PPM;
+            rec.x += rectangle.x;
+
+            rec.y *= PPM;
+            rec.y += rectangle.y;
+
+            rec.height *= PPM;
+            rec.width *= PPM;
+
+            hitboxRecs.add(rec);
+        }
+
+        for(Rectangle rec : hitboxRecs)
+        {
+            ObjectCreator.createBody(BodyDef.BodyType.StaticBody,world,new Vector2(rec.x,rec.y),
+                new Vector2(rec.width,rec.height), ObjectCreator.ShapeType.Rectangle);
+        }
     }
 
     public void draw(SpriteBatch batch)

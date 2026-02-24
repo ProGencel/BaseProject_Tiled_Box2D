@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
         manager = new MapCamManager(assetManager,batch);
         physicWorld = new PhysicWorld(manager);
 
-        holderStatics = new HolderStatics(manager.getTiledMap());
+        holderStatics = new HolderStatics(manager.getTiledMap(),physicWorld.getWorld());
     }
 
     @Override
@@ -43,7 +43,6 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(Color.GRAY);
 
         manager.render(delta);
-        physicWorld.render(delta);
 
         batch.setProjectionMatrix(manager.getCamera().combined);
         batch.begin();
@@ -51,6 +50,8 @@ public class GameScreen implements Screen {
         holderStatics.draw(batch);
 
         batch.end();
+
+        physicWorld.render(delta);
     }
 
     @Override
@@ -64,8 +65,6 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         manager.getViewport().update(width, height, true);
     }
-
-
 
     @Override
     public void pause() {}
