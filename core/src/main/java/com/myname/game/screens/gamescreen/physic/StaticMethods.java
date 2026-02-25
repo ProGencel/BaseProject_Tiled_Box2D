@@ -2,16 +2,56 @@ package com.myname.game.screens.gamescreen.physic;
 
 import static com.myname.game.screens.gamescreen.utils.Constants.*;
 
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 
-public class ObjectCreator {
+public class StaticMethods {
 
     public enum ShapeType
     {
         Rectangle,
         Circle,
         Polygon
+    }
+
+    public static <T extends MapObject> Array<MapObject> findWantedMapbjects(TiledMap map, String mapLayer, String wantedClass, Class<T> clazz)
+    {
+        Array<MapObject> array = new Array<>();
+
+        MapLayer layer = map.getLayers().get(mapLayer);
+
+        for(MapObject mapObject : layer.getObjects().getByType(clazz))
+        {
+            String wantedType = mapObject.getProperties().get("type", String.class);
+
+            if(wantedType.equals(wantedClass))
+            {
+               array.add(mapObject);
+            }
+        }
+
+        return array;
+    }
+
+    public static <T extends MapObject> MapObject findWantedMapbject(TiledMap map, String mapLayer, String wantedClass, Class<T> clazz)
+    {
+        MapLayer layer = map.getLayers().get(mapLayer);
+
+        for(MapObject mapObject : layer.getObjects().getByType(clazz))
+        {
+            String wantedType = mapObject.getProperties().get("type", String.class);
+
+            if(wantedType.equals(wantedClass))
+            {
+                return mapObject;
+            }
+        }
+
+        return null;
     }
 
     public static void createBody(BodyDef.BodyType bodyType, World world, Vector2 pos,Vector2 mes, ShapeType shapeType)

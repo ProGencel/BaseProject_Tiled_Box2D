@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.myname.game.screens.gamescreen.physic.ObjectCreator;
+import com.myname.game.screens.gamescreen.physic.StaticMethods;
 
 public class StaticEntity extends GameEntity{
 
@@ -56,8 +56,8 @@ public class StaticEntity extends GameEntity{
 
         for(Rectangle rec : hitboxRecs)
         {
-            ObjectCreator.createBody(BodyDef.BodyType.StaticBody,world,new Vector2(rec.x,rec.y),
-                new Vector2(rec.width,rec.height), ObjectCreator.ShapeType.Rectangle);
+            StaticMethods.createBody(BodyDef.BodyType.StaticBody,world,new Vector2(rec.x,rec.y),
+                new Vector2(rec.width,rec.height), StaticMethods.ShapeType.Rectangle);
         }
     }
 
