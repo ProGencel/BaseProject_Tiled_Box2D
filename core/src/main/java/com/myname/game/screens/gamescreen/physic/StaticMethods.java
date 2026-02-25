@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.myname.game.screens.gamescreen.utils.ExceptionSafety;
 
 public class StaticMethods {
 
@@ -22,7 +23,7 @@ public class StaticMethods {
     {
         Array<MapObject> array = new Array<>();
 
-        MapLayer layer = map.getLayers().get(mapLayer);
+        MapLayer layer = ExceptionSafety.safeLayer(map,mapLayer);
 
         for(MapObject mapObject : layer.getObjects().getByType(clazz))
         {
@@ -39,7 +40,7 @@ public class StaticMethods {
 
     public static <T extends MapObject> MapObject findWantedMapbject(TiledMap map, String mapLayer, String wantedClass, Class<T> clazz)
     {
-        MapLayer layer = map.getLayers().get(mapLayer);
+        MapLayer layer = ExceptionSafety.safeLayer(map,mapLayer);
 
         for(MapObject mapObject : layer.getObjects().getByType(clazz))
         {

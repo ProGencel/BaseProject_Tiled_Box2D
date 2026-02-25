@@ -59,6 +59,7 @@ public class GameScreen implements Screen {
         assetManager.dispose();
         manager.dispose();
         batch.dispose();
+        physicWorld.dispose();
     }
 
     @Override
